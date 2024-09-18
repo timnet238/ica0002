@@ -8,3 +8,5 @@
     hosts: web_servers
     roles:
       - nginx
+      - agama
+      - uwsgi
