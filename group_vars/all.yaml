@@ -1,4 +1,8 @@
-mysql_host: 192.168.42.82
+vm1: timnet238-1
+vm2: timnet238-2
+mysql_host: timnet238-2
+startup_name: clickit.io
+
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -9,3 +13,10 @@ mysql_password: !vault |
           3832636631383766340a613062636436393834366561396132323365656334613035376338333361
           6533
 
+
+forwarders:
+  - 1.1.1.1
+  - 0.0.0.0
+  - 8.8.8.8
+  - 9.9.9.9
+  - 9.9.9.10
