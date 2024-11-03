@@ -5,6 +5,12 @@
       - init
     become: yes
 
+  - name: Prometheus
+    hosts: prometheus
+    gather_facts: no
+    roles:
+      - prometheus
+
   - name: DNS server
     hosts: dns_servers
     become: yes

@@ -20,3 +20,9 @@ forwarders:
   - 8.8.8.8
   - 9.9.9.9
   - 9.9.9.10
+  
+bind9_prom_port: 9119
+mysql_prom_port: 9104
+nginx_prom_port: 9113
+prometheus_port: 9090
+

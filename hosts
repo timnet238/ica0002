@@ -1,5 +1,5 @@
-timnet238-1 ansible_host=ubuntu@193.40.156.67 ansible_port=44122 ansible_user=ubuntu
-timnet238-2 ansible_host=ubuntu@193.40.156.67 ansible_port=35322 ansible_user=ubuntu
+timnet238-1 ansible_host=ubuntu@193.40.156.67 ansible_port=30922 ansible_user=ubuntu
+timnet238-2 ansible_host=ubuntu@193.40.156.67 ansible_port=41122 ansible_user=ubuntu
 
 
 [web_servers]
@@ -9,4 +9,7 @@ timnet238-1
 timnet238-2
 
 [dns_servers]
+timnet238-2
+
+[prometheus]
 timnet238-2

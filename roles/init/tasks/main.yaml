@@ -2,3 +2,22 @@
 - name: Update APT cache
   ansible.builtin.apt:
     cache_valid_time: 86400
+   
+- name: Install prometheus node exporters
+  ansible.builtin.apt:
+    name: prometheus-node-exporter
+    state: present
+
+- name: Configure Node exporter
+  ansible.builtin.template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+  notify:
+      - Daemon reload
+      - Restart node_exporter
+
+- name: Start and enable node exporters service
+  ansible.builtin.service:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
