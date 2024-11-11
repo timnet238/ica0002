@@ -1,0 +1,20 @@
+- name: Create configuration file
+  ansible.builtin.template:
+    src: ../templates/exporter.j2
+    dest: /etc/nginx/sites-enabled/exporter
+  notify:
+    - Restart nginx
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Install nginx exporter
+  ansible.builtin.apt:
+    name: prometheus-nginx-exporter
+  register: install
+
+- name: Start and enable nginx exporter service
+  ansible.builtin.service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: yes

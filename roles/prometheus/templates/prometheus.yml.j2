@@ -16,3 +16,23 @@ scrape_configs:
           - '{{ vm }}:9100'
           {% endfor %}
 
+  - job_name: bind9
+    static_configs:
+      - targets:
+          {% for vm in groups['dns_servers'] %}
+          - '{{ vm }}:{{ bind9_prom_port }}'
+          {% endfor %}
+  
+  - job_name: mysql
+    static_configs:
+      - targets:
+          {% for vm in groups['db_servers'] %}
+          - '{{ vm }}:{{ mysql_prom_port }}'
+          {% endfor %}
+  
+  - job_name: nginx
+    static_configs:
+      - targets:
+          {% for vm in groups['all'] %}
+          - '{{ vm }}:{{ nginx_prom_port }}'
+          {% endfor %}

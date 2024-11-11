@@ -21,3 +21,7 @@
     name: prometheus-node-exporter
     state: started
     enabled: yes
+    
+- name: Update CA certificates
+  ansible.builtin.apt:
+    name: ca-certificates>=20230300*
