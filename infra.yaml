@@ -3,6 +3,8 @@
     hosts: all
     roles:
       - init
+      - backup
+    tags: i
     become: yes
 
   - name: Prometheus
