@@ -1,0 +1,14 @@
+[Unit]
+Description=Prometheus Bind9 Exporter
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/prometheus-bind-exporter \
+    --web.listen-address=:9119 \
+    --bind.stats-url=http://127.0.0.1:8053/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+

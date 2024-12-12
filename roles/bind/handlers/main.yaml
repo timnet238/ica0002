@@ -2,3 +2,12 @@
   ansible.builtin.service:
     name: bind9
     state: restarted
+    
+- name: Restart Systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+    
+- name: Restart Bind9 exporter
+  ansible.builtin.service:
+    name: bind_exporter
+    state: restarted

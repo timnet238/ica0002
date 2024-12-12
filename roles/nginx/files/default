@@ -19,6 +19,12 @@ server {
 	    proxy_pass http://localhost:3000;
 	    proxy_set_header Host $http_host;
 	}
+	
+	location /influxdb-metrics {
+	    proxy_pass http://localhost:9424/metrics;
+	}
 }
+
+
 
 

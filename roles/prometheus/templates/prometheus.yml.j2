@@ -12,27 +12,35 @@ scrape_configs:
   - job_name: linux
     static_configs:
       - targets:
-          {% for vm in groups['all'] %}
+{% for vm in groups['all'] %}
           - '{{ vm }}:9100'
-          {% endfor %}
+{% endfor %}
 
   - job_name: bind9
     static_configs:
       - targets:
-          {% for vm in groups['dns_servers'] %}
+{% for vm in groups['dns_servers'] %}
           - '{{ vm }}:{{ bind9_prom_port }}'
-          {% endfor %}
-  
+{% endfor %}
+
   - job_name: mysql
     static_configs:
       - targets:
-          {% for vm in groups['db_servers'] %}
+{% for vm in groups['db_servers'] %}
           - '{{ vm }}:{{ mysql_prom_port }}'
-          {% endfor %}
-  
+{% endfor %}
+
   - job_name: nginx
     static_configs:
       - targets:
-          {% for vm in groups['all'] %}
+{% for vm in groups['all'] %}
           - '{{ vm }}:{{ nginx_prom_port }}'
-          {% endfor %}
+{% endfor %}
+
+  - job_name: influxdb
+    static_configs:
+      - targets:
+{% for vm in groups['influxdb'] %}
+          - '{{ vm }}:9424'
+{% endfor %}
+

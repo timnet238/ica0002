@@ -3,12 +3,15 @@
     name: prometheus-mysqld-exporter
     state: present
   register: install
+
 - name: Create configuration file
   ansible.builtin.template:
     src: ../templates/my.cnf.j2
     dest: /var/lib/prometheus/.my.cnf
+  no_log: true
   notify:
     - Restart mysql exporter
+
 - name: Create user exporter
   community.mysql.mysql_user:
     name: exporter
@@ -16,12 +19,15 @@
     priv:
       '*.*': 'PROCESS,REPLICATION CLIENT,SELECT'
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  no_log: true
   notify:
     - Restart mysql exporter
+
 - name: Pause for 10 sec
   ansible.builtin.pause:
     seconds: 10
   when: install.changed
+
 - name: Start and enable mysql exporter service
   ansible.builtin.service:
     name: prometheus-mysqld-exporter

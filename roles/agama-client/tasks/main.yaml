@@ -1,0 +1,46 @@
+- name: Create user agama-client
+  ansible.builtin.user:
+    name: agama-client
+
+- name: install fping
+  ansible.builtin.apt:
+    name: fping
+
+- name: Ensure agama-client directory exists
+  ansible.builtin.file:
+    path: /etc/agama-client/
+    state: directory
+    owner: agama-client
+
+- name: Copy agama-client configuration
+  ansible.builtin.template:
+    src: ../templates/agama-client.conf.j2
+    dest: /etc/agama-client/agama-client.conf
+    owner: agama-client
+    mode: '0644'
+  notify:
+    - Restart agama-client
+
+- name: Copy agama-client script
+  ansible.builtin.template:
+    src: ../templates/agama-client.j2
+    dest: /usr/local/bin/agama-client
+    owner: agama-client
+    mode: '0755'
+  notify:
+    - Restart agama-client
+
+- name: Copy agama-client service
+  ansible.builtin.template:
+    src: ../templates/agama-client.service.j2
+    dest: /etc/systemd/system/agama-client.service
+    owner: root
+    mode: '0644'
+  notify:
+    - Daemon reload
+
+- name: Start and enable agama-client service
+  ansible.builtin.service:
+    name: agama-client
+    state: started
+    enabled: yes

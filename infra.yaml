@@ -11,6 +11,7 @@
     roles:
       - prometheus
       - nginx_exporter
+    tags: p
 
   - name: DNS server
     hosts: dns_servers
@@ -18,13 +19,14 @@
     gather_facts: no
     roles: 
       - bind
-      - bind_exporter
+    tags: d
 
   - name: DNS setup
     hosts: all
     roles:
       - dns
-    become: yes 
+    become: yes
+    tags: ns 
     
 
   - name: Database server
@@ -43,6 +45,7 @@
       - uwsgi
       - nginx_exporter
     become: yes
+    tags: ws
     
   - name: Grafana
     hosts: grafana
@@ -50,3 +53,17 @@
       - grafana
     become: yes
     tags: g    
+    
+  - name: influxdb
+    hosts: influxdb
+    roles:
+      - influxdb
+    become: yes
+    tags: i
+    
+  - name: agama-client
+    hosts: agama-client
+    roles:
+      - agama-client
+    become: yes
+    tags: ac 

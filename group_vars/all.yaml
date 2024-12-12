@@ -1,6 +1,7 @@
 vm1: timnet238-1
 vm2: timnet238-2
 mysql_host: timnet238-2
+influxdb_host: timnet238-2
 startup_name: clickit.io
 
 mysql_database: agama

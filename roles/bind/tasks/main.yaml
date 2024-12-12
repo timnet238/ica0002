@@ -23,3 +23,38 @@
   notify:
     - Restart bind9
 
+- name: Download Bind9 exporter binary
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus-community/bind_exporter/releases/download/v0.6.1/bind_exporter-0.6.1.linux-amd64.tar.gz"
+    dest: "/opt/bind_exporter-0.6.1.linux-amd64.tar.gz"
+    mode: '0644'
+
+- name: Extract Bind9 exporter binary
+  ansible.builtin.unarchive:
+    src: "/opt/bind_exporter-0.6.1.linux-amd64.tar.gz"
+    dest: "/opt"
+    remote_src: yes
+    mode: '0755'
+    extra_opts: --strip-components=1
+
+- name: Create Link to the Bind9 exporter
+  ansible.builtin.file:
+    src: "/opt/bind_exporter"
+    dest: "/usr/local/bin/prometheus-bind-exporter"
+    state: link
+    mode: '0755'
+
+- name: Create Bind9 exporter systemd service
+  ansible.builtin.template:
+    src: bind_exporter.service.j2
+    dest: /etc/systemd/system/bind_exporter.service
+    mode: '0644'
+  notify: 
+    - Restart Systemd daemon
+    - Restart Bind9 exporter
+
+- name: Ensure Bind9 exporter is started
+  ansible.builtin.service:
+    name: bind_exporter
+    state: started
+    enabled: yes
