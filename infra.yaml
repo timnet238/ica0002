@@ -66,6 +66,6 @@
   - name: agama-client
     hosts: agama-client
     roles:
-      - agama-client
+      - agama_client
     become: yes
     tags: ac 
