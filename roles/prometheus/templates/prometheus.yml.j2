@@ -44,3 +44,6 @@ scrape_configs:
           - '{{ vm }}:9424'
 {% endfor %}
 
+  - job_name: backup
+    static_configs:
+      - targets: ['backup.clickit.io:9111']

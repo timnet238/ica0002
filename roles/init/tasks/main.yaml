@@ -32,3 +32,15 @@
 - name: Update CA certificates
   ansible.builtin.apt:
     name: ca-certificates>=20230300*
+    
+- name: Create /home/backup/restore directory
+  ansible.builtin.file:
+    path: /home/backup/restore
+    state: directory
+    owner: backup
+    mode: '0755'
+
+- name: Install duplicity
+  ansible.builtin.apt:
+    name: duplicity
+    state: present
