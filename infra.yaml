@@ -42,6 +42,7 @@
   - name: Web server
     hosts: web_servers
     roles:
+      - docker
       - nginx
       - agama
       - uwsgi
@@ -52,6 +53,7 @@
   - name: Grafana
     hosts: grafana
     roles:
+      - docker
       - grafana
     become: yes
     tags: g    
@@ -69,3 +71,10 @@
       - agama_client
     become: yes
     tags: ac 
+    
+  - name: docker
+    hosts: all
+    become: yes
+    roles:
+      - docker
+    tags: docker

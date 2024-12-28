@@ -27,7 +27,10 @@
   community.mysql.mysql_db:
     name: "{{ mysql_database }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-
+  notify:
+    - reset mysql source
+    - reset mysql replica
+    
 - name: MySQL user
   community.mysql.mysql_user:
     name: "{{ mysql_user }}"
@@ -67,3 +70,22 @@
     dest: /etc/cron.d/mysql-backup
   notify:
     - Restart cron
+    
+- name: Create replication user
+  community.mysql.mysql_user:
+    name: "{{ mysql_replication_user }}"
+    password: "{{ mysql_replication_password }}"
+    host: "%"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    priv: "*.*:REPLICATION SLAVE"
+#  no_log: yes
+  
+- name: Enable read-only mode on a replica
+  community.mysql.mysql_variables:
+    variable: read_only
+    value: "{{ 'OFF' if inventory_hostname == mysql_host else 'ON' }}"
+    mode: persist
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  notify:
+    - reset mysql source
+    - reset mysql replica

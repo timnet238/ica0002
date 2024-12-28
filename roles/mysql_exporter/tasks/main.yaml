@@ -12,9 +12,16 @@
   notify:
     - Restart mysql exporter
 
+- name: export replication metrics
+  ansible.builtin.template:
+    src: ../templates/prometheus-mysqld-exporter
+    dest: /etc/default/prometheus-mysqld-exporter
+  notify:
+    - Restart mysql exporter
+
 - name: Create user exporter
   community.mysql.mysql_user:
-    name: exporter
+    name: "{{ mysql_exporter_user }}"
     password: "{{mysql_exporter_pass}}"
     priv:
       '*.*': 'PROCESS,REPLICATION CLIENT,SELECT'

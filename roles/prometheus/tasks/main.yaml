@@ -16,7 +16,7 @@
 
 - name: Replace a file
   ansible.builtin.template:
-    src: ../nginx/files/default
+    src: ../nginx/templates/default
     dest: /etc/nginx/sites-enabled/default
   notify: Restart nginx
 
