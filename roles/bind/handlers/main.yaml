@@ -1,13 +1,8 @@
-- name: Restart bind9
-  ansible.builtin.service:
+- name: restart bind9
+  service:
     name: bind9
     state: restarted
+    enabled: yes
     
-- name: Restart Systemd daemon
-  ansible.builtin.systemd:
-    daemon_reload: yes
-    
-- name: Restart Bind9 exporter
-  ansible.builtin.service:
-    name: bind_exporter
-    state: restarted
+- name: restart rndc
+  shell: rndc reload
