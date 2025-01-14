@@ -34,19 +34,27 @@
     state: started
     enabled: yes
     
-- name: Unarchive keepalived exporter
-  ansible.builtin.unarchive:
-    src: http://backup/keepalived-exporter-1.2.0.linux-amd64.tar.gz
-    dest: /usr/local/bin
-    remote_src: yes
-    mode: 0755
-    
-- name: Copy keepalived exporter
+- name: Check if Keepalived Exporter exists
+  stat:
+    path: /tmp/keepalived-exporter_1.4.0_linux_amd64.deb
+  register: keepalived_file
+
+- name: Download Keepalived Exporter
+  get_url:
+    url: http://backup/keepalived-exporter_1.4.0_linux_amd64.deb
+    dest: /opt/keepalived-exporter_1.4.0_linux_amd64.deb
+  #when: not keepalived_file.stat.exists
+
+- name: Install Keepalived Exporter
+  apt:
+    deb: /opt/keepalived-exporter_1.4.0_linux_amd64.deb
+
+- name: Move Keepalived Exporter to final location
   copy:
-    src: /usr/local/bin/keepalived-exporter-1.2.0.linux-amd64/keepalived-exporter
+    src: /usr/bin/keepalived-exporter
     dest: /usr/local/bin/prometheus-keepalived-exporter
+    mode: '0755'
     remote_src: yes
-    mode: 0755
 
 - name: Create keepalived exporter service
   ansible.builtin.template:

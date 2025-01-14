@@ -1,3 +1,4 @@
+
 global
 	log /dev/log	local0
 	log /dev/log	local1 notice
@@ -24,13 +25,21 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
+
+
+
+
 listen agama
-    bind *:88
-    stats enable
-    stats uri /stats
+    bind :{{haproxy_port}}
+
     
-    {% for vm in groups['web_servers'] %}
+    {% for vm in groups['docker'] %}
     {% for x in range(nginx_containers_per_vm) %}
     server {{ vm }}-agama-{{ x }} {{ vm }}:{{ agama_port + x }} check
     {% endfor %}
     {% endfor %}
+    
+listen stats
+  bind :{{haproxy_stats_port}}
+  stats enable
+  stats uri /stats

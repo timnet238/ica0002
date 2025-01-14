@@ -1,10 +1,10 @@
-timnet238-1 ansible_host=ubuntu@193.40.156.67 ansible_port=3722 ansible_user=ubuntu
-timnet238-2 ansible_host=ubuntu@193.40.156.67 ansible_port=18322 ansible_user=ubuntu
+timnet238-1 ansible_host=ubuntu@193.40.156.67 ansible_port=15822 ansible_user=ubuntu
+timnet238-2 ansible_host=ubuntu@193.40.156.67 ansible_port=5822 ansible_user=ubuntu
+timnet238-3 ansible_host=ubuntu@193.40.156.67 ansible_port=6322 ansible_user=ubuntu
 
 
 [web_servers]
-timnet238-1
-timnet238-2
+timnet238-3
 
 [db_servers]
 timnet238-1
@@ -19,22 +19,27 @@ dns_primary
 dns_secondary
 
 [dns_primary]
-timnet238-1
+timnet238-3
 
 [dns_secondary]
 timnet238-2
+timnet238-1
 
 [prometheus]
-timnet238-2
+timnet238-3
 
 [grafana]
-timnet238-1
+timnet238-3
 
-[influxdb]
+[docker]
+timnet238-1
 timnet238-2
 
-[agama-client]
-timnet238-1
+[influxdb]
+timnet238-3
+
+[agama_client]
+timnet238-3
 
 [HA_servers]
 timnet238-1

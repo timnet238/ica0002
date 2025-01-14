@@ -24,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -71,8 +71,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
+        "h": 3,
+        "w": 2,
         "x": 0,
         "y": 0
       },
@@ -94,7 +94,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -104,7 +104,7 @@
           "editorMode": "code",
           "expr": "rate(influxdb_exporter_stats_query_success[5m])",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
@@ -119,13 +119,97 @@
       },
       "fieldConfig": {
         "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 1,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "index": 0,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 2,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "mysql_up",
+          "format": "time_series",
+          "legendFormat": "{{instance}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "MySQL Status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -134,6 +218,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -170,7 +255,7 @@
       "gridPos": {
         "h": 4,
         "w": 6,
-        "x": 6,
+        "x": 5,
         "y": 0
       },
       "id": 4,
@@ -211,6 +296,9 @@
       },
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "decimals": 2,
           "mappings": [],
           "max": 100,
@@ -235,16 +323,14 @@
       "gridPos": {
         "h": 4,
         "w": 6,
-        "x": 12,
+        "x": 11,
         "y": 0
       },
       "id": 2,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
-        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -252,11 +338,11 @@
           "fields": "",
           "values": false
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -272,74 +358,7 @@
         }
       ],
       "title": "Memory Utilization (%)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "PCCE658803CE0D760"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 6,
-        "x": 18,
-        "y": 0
-      },
-      "id": 10,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "PCCE658803CE0D760"
-          },
-          "query": "SELECT sum(\"items\") FROM \"agama-stats\" WHERE $timeFilter AND \"name\" =~ /^(timnet238-1|timnet238-2|timnet238-3)$/ GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series"
-        }
-      ],
-      "title": "Panel Title",
-      "type": "stat"
+      "type": "gauge"
     },
     {
       "datasource": {
@@ -383,10 +402,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 3
+        "h": 9,
+        "w": 7,
+        "x": 17,
+        "y": 0
       },
       "id": 16,
       "options": {
@@ -394,6 +413,7 @@
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -401,20 +421,24 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "value_and_name"
+        "textMode": "value_and_name",
+        "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "haproxy_server_up",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{server}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -461,9 +485,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 5,
         "x": 0,
-        "y": 4
+        "y": 3
       },
       "id": 3,
       "options": {
@@ -483,7 +507,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -493,7 +517,7 @@
           "editorMode": "code",
           "expr": "bind_up",
           "format": "time_series",
-          "legendFormat": "__auto",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
@@ -512,9 +536,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -523,6 +551,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -559,7 +588,7 @@
       "gridPos": {
         "h": 4,
         "w": 6,
-        "x": 6,
+        "x": 5,
         "y": 4
       },
       "id": 8,
@@ -589,7 +618,7 @@
           "hide": false,
           "includeNullMetadata": true,
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A",
           "useBackend": false
@@ -606,37 +635,12 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
+          "decimals": 2,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -649,28 +653,32 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
         "w": 6,
-        "x": 12,
+        "x": 11,
         "y": 4
       },
-      "id": 6,
+      "id": 1,
       "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
       "pluginVersion": "11.4.0",
       "targets": [
@@ -680,15 +688,15 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(mysql_global_status_commands_total{command=\"select\"}[1m])",
+          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance!=\"localhost:9100\"}[5m])) * 100)\r\n",
           "format": "time_series",
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "MySQL SELECT Queries per Minute",
-      "type": "timeseries"
+      "title": "CPU Utilization (%)",
+      "type": "gauge"
     },
     {
       "datasource": {
@@ -730,11 +738,11 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 5,
         "x": 0,
-        "y": 8
+        "y": 7
       },
-      "id": 5,
+      "id": 7,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -752,7 +760,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -760,14 +768,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "mysql_up",
+          "expr": "nginx_up",
           "format": "time_series",
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "MySQL Status",
+      "title": "Nginx Status",
       "type": "stat"
     },
     {
@@ -781,9 +789,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -792,6 +804,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -828,10 +841,10 @@
       "gridPos": {
         "h": 4,
         "w": 6,
-        "x": 6,
+        "x": 5,
         "y": 8
       },
-      "id": 12,
+      "id": 6,
       "options": {
         "legend": {
           "calcs": [],
@@ -852,14 +865,14 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rate(influxdb_write_write_ok[5m])",
-          "instant": false,
-          "legendFormat": "__auto",
+          "expr": "rate(mysql_global_status_commands_total{command=\"select\"}[1m])",
+          "format": "time_series",
+          "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "InfluxDB write rate",
+      "title": "MySQL SELECT Queries per Minute",
       "type": "timeseries"
     },
     {
@@ -891,7 +904,7 @@
       "gridPos": {
         "h": 4,
         "w": 6,
-        "x": 12,
+        "x": 11,
         "y": 8
       },
       "id": 9,
@@ -912,9 +925,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
+          "datasource": {
+            "uid": "P3DB4AB89FEDD369B"
+          },
           "groupBy": [
             {
               "params": [
@@ -998,10 +1014,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 3,
         "w": 6,
-        "x": 18,
-        "y": 10
+        "x": 17,
+        "y": 9
       },
       "id": 20,
       "options": {
@@ -1009,6 +1025,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "vertical",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1016,19 +1033,23 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "keepalived_vrrp_state",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{instance}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1042,6 +1063,9 @@
       },
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [
             {
               "options": {
@@ -1061,12 +1085,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "green",
-                "value": 1
+                "color": "red",
+                "value": 80
               }
             ]
           }
@@ -1075,15 +1099,15 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 5,
         "x": 0,
-        "y": 12
+        "y": 11
       },
-      "id": 7,
+      "id": 14,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
@@ -1097,7 +1121,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -1105,14 +1129,15 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "nginx_up",
-          "format": "time_series",
+          "exemplar": true,
+          "expr": "haproxy_up",
+          "interval": "",
           "legendFormat": "{{instance}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Nginx Status",
+      "title": "Haproxy up",
       "type": "stat"
     },
     {
@@ -1122,10 +1147,43 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 2,
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
           "mappings": [],
-          "max": 100,
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1138,18 +1196,81 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "percent"
+          }
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 3,
         "w": 6,
-        "x": 6,
+        "x": 5,
         "y": 12
       },
-      "id": 1,
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "rate(influxdb_write_write_ok[5m])",
+          "instant": false,
+          "legendFormat": "{{instance}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "InfluxDB write rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P3DB4AB89FEDD369B"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 11,
+        "y": 12
+      },
+      "id": 10,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -1167,22 +1288,20 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "type": "influxdb",
+            "uid": "P3DB4AB89FEDD369B"
           },
-          "editorMode": "code",
-          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance!=\"localhost:9100\"}[5m])) * 100)\r\n",
-          "format": "time_series",
-          "legendFormat": "{{instance}}",
-          "range": true,
-          "refId": "A"
+          "query": "SELECT last(\"items\") AS \"current_items\"\nFROM \"agama-stats\"\nWHERE time > now() - 60m\n  AND (\"name\" = 'timnet238-1.clickit.io.')\nGROUP BY \"name\"",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
         }
       ],
-      "title": "CPU Utilization (%)",
+      "title": "current number of items",
       "type": "stat"
     },
     {
@@ -1227,89 +1346,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 3,
         "w": 6,
-        "x": 12,
+        "x": 17,
         "y": 12
-      },
-      "id": 14,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": true,
-          "expr": "haproxy_up",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Haproxy up",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "index": 1,
-                  "text": "DOWN"
-                },
-                "1": {
-                  "index": 0,
-                  "text": "UP"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 18,
-        "y": 16
       },
       "id": 18,
       "options": {
@@ -1317,6 +1357,7 @@
         "graphMode": "none",
         "justifyMode": "center",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1324,19 +1365,23 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
+          "editorMode": "code",
           "exemplar": true,
           "expr": "keepalived_up",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{instance}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1344,9 +1389,9 @@
       "type": "stat"
     }
   ],
+  "preload": false,
   "refresh": "5s",
-  "schemaVersion": 34,
-  "style": "dark",
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": []
@@ -1359,6 +1404,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "ae3nne7k9q41sf",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

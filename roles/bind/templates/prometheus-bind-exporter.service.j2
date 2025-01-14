@@ -1,0 +1,13 @@
+[Unit]
+After=network-online.target
+
+[Service]
+Restart=on-failure
+User=prometheus
+ExecStart=/usr/local/bin/prometheus-bind-exporter
+#EnvironmentFile=/etc/systemd/system/prometheus-bind-exporter
+
+[Install]
+WantedBy=multi-user.target
+
+#aa

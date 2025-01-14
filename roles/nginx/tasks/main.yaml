@@ -1,18 +1,32 @@
- - name: install nginx
-   apt:
-     name: nginx
-     state: latest
-     update_cache: yes
+- name: install nginx
+  apt:
+    name: nginx
+    state: latest
+    update_cache: yes
 
- - name: nginx config
-   ansible.builtin.template:
-     src: ../nginx/templates/default
-     dest: /etc/nginx/sites-enabled/default
-   notify:
-     - Restart nginx
+- name: nginx config
+  ansible.builtin.template:
+    src: ../nginx/templates/default
+    dest: /etc/nginx/sites-enabled/default
+  notify:
+    - Restart nginx
      
- - name: Start service nginx
-   ansible.builtin.service:
-     name: nginx
-     state: started
-     enabled: yes
+- name: Start service nginx
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Install nginx exporter
+  ansible.builtin.apt:
+    name: prometheus-nginx-exporter
+  register: install
+
+- name: Start and enable nginx exporter service
+  ansible.builtin.service:
+    name: prometheus-nginx-exporter
+    state: started
+    enabled: yes

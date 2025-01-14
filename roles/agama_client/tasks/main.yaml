@@ -5,6 +5,7 @@
 - name: install fping
   ansible.builtin.apt:
     name: fping
+    state: present
 
 - name: Ensure agama-client directory exists
   ansible.builtin.file:

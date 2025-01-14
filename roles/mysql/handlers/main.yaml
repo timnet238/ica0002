@@ -34,4 +34,8 @@
     - startreplica
   when: inventory_hostname != mysql_host
 #  no_log: yes
-  
+
+- name: Restart mysql exporter
+  ansible.builtin.service:
+    name: prometheus-mysqld-exporter
+    state: restarted  

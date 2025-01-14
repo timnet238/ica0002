@@ -4,5 +4,19 @@
     state: restarted
     enabled: yes
     
+- name: daemon reload
+  systemd:
+    daemon_reload: yes
+
 - name: restart rndc
   shell: rndc reload
+  
+- name: restart bind exporter
+  service:
+    name: prometheus-bind-exporter
+    state: restarted
+    enabled: yes
+    
+- name: daemon reload
+  systemd:
+    daemon_reload: yes

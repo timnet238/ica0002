@@ -28,6 +28,7 @@
     - mysql.json
     - main.json
     - backups.json
+    - rsyslog.json
   notify: Restart grafana docker container
 
 - name: Add datasource config
@@ -38,9 +39,9 @@
 
 - name: Grafana Docker container
   community.docker.docker_container:
-    container_default_behavior: no_defaults
     name: grafana
-    image: grafana/grafana:8.3.3
+    image: grafana/grafana
     restart_policy: always
     published_ports: "{{ grafana_port }}:3000"
     volumes: /opt/grafana:/etc/grafana
+    state: started

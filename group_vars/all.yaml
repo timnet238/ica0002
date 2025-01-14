@@ -3,9 +3,10 @@ vm2: timnet238-2
 domain_name: clickit.io
 mysql_host: timnet238-2
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
-influxdb_host: timnet238-2
+influxdb_host: timnet238-3
 startup_name: clickit.io
 backup_server: 192.168.42.132
+backupserverip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 
 mysql_database: agama
@@ -84,7 +85,6 @@ nsupdate_key_secret: !vault |
 
 dns_forwarders:
   - 1.1.1.1
-  - 0.0.0.0
   - 8.8.8.8
   - 9.9.9.9
   - 9.9.9.10
@@ -108,18 +108,21 @@ agama_port: 8001
 haproxy_prom_port: 9101
 keepalive_prom_port: 9165
 
-nginx_containers_per_vm: 2
+haproxy_port: 88
+haproxy_stats_port: 9188
+
+nginx_containers_per_vm: 3
 
 cname_records:
     grafana: "{{ groups['grafana'][0] }}"
     influxdb: "{{ groups['influxdb'][0] }}"
-    lb-1: "{{ groups['keepalived'][0] }}"
-    lb-2: "{{ groups['keepalived'][1] }}"
-    mysql-1: "{{ groups['db_servers'][0] }}"
-    mysql-2: "{{ groups['db_servers'][1] }}"
-    ns-1: "{{ groups['dns_servers'][0] }}"
-    ns-2: "{{ groups['dns_servers'][1] }}"
+    lb_1: "{{ groups['HA_servers'][0] }}"
+    lb_2: "{{ groups['HA_servers'][1] }}"
+    mysql_1: "{{ groups['db_servers'][0] }}"
+    mysql_2: "{{ groups['db_servers'][1] }}"
+    ns_1: "{{ groups['dns_servers'][0] }}"
+    ns_2: "{{ groups['dns_servers'][1] }}"
     prometheus: "{{ groups['prometheus'][0] }}"
-    www-1: "{{ groups['web_servers'][0] }}"
-    www-2: "{{ groups['web_servers'][1] }}"
+    www_1: "{{ groups['docker'][0] }}"
+    www_2: "{{ groups['docker'][1] }}"
 

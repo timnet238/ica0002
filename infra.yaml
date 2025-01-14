@@ -7,19 +7,20 @@
     tags: i
     become: yes
 
+
   - name: Prometheus
     hosts: prometheus
     gather_facts: no
     roles:
       - prometheus
-      - nginx_exporter
     tags: p
-
+  
   - name: DNS server
     hosts: dns_servers
     become: yes
     gather_facts: no
     roles: 
+      - init
       - bind
     tags: d
 
@@ -31,22 +32,32 @@
     tags: ns 
     
 
+  - name: docker
+    hosts: all
+    become: yes
+    roles:
+      - docker
+    tags: docker
+  
+  - name: Prometheus
+    hosts: prometheus
+    gather_facts: no
+    roles:
+      - prometheus
+    tags: p
+  
   - name: Database server
     hosts: db_servers
     roles: 
       - mysql
-      - mysql_exporter
     become: yes
     tags: db
       
   - name: Web server
-    hosts: web_servers
+    hosts: all
     roles:
       - docker
       - nginx
-      - agama
-      - uwsgi
-      - nginx_exporter
     become: yes
     tags: ws
     
@@ -58,11 +69,19 @@
     become: yes
     tags: g    
     
+  - name: Install agama docker
+    hosts: docker
+    become: yes
+    roles:
+      - agama
+    tags: agama_docker
+  
   - name: HA
     hosts: HA_servers
     roles:
       - haproxy
       - keepalived
+      - agama
     become: yes
     gather_facts: yes
     tags: ha
@@ -72,18 +91,13 @@
     roles:
       - influxdb
     become: yes
-    tags: i
+    tags: idb
     
   - name: agama-client
-    hosts: agama-client
+    hosts: agama_client
     roles:
       - agama_client
     become: yes
     tags: ac 
     
-  - name: docker
-    hosts: all
-    become: yes
-    roles:
-      - docker
-    tags: docker
+

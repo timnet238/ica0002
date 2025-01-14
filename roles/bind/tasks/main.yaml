@@ -18,7 +18,7 @@
     - options
     - local
   notify: restart bind9
-  #no_log: true
+  no_log: true
   
 - name: Copy the zone config
   template:
@@ -33,7 +33,7 @@
   template:
     src: zone.reversed.j2
     dest: /var/cache/bind/db.clickit.io.reversed
-  #no_log: yes
+  no_log: yes
   notify: restart rndc
   
 - name: Execute handlers
@@ -45,12 +45,12 @@
     key_name: "nsupdate.key"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_key_secret }}"
-    server: "localhost"
+    server: "127.0.0.1"
     zone: "{{ domain_name }}"
     record: "backup"
     type: "A"
     value: "{{ backupserverip }}"
-  #no_log: true
+  no_log: true
   notify: restart bind9
   
 - name: Add the CNAME records
@@ -59,12 +59,48 @@
     key_name: "nsupdate.key"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ nsupdate_key_secret }}"
-    server: "localhost"
+    server: "127.0.0.1"
     zone: "{{ domain_name }}"
     record: "{{ item.key }}.{{ domain_name }}."
     type: "CNAME"
     value: "{{ item.value }}.{{ domain_name }}."
   loop: "{{ cname_records | dict2items }}"
   notify: restart bind9
-  #no_log: true
+  no_log: true
     
+- name: Download Bind Exporter
+  ansible.builtin.get_url:
+    url: https://github.com/prometheus-community/bind_exporter/releases/download/v0.6.1/bind_exporter-0.6.1.linux-amd64.tar.gz
+    dest: /opt/bind_exporter-0.6.1.linux-amd64.tar.gz
+    mode: 0644
+
+- name: Extract Bind Exporter
+  ansible.builtin.unarchive:
+    src: /opt/bind_exporter-0.6.1.linux-amd64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+
+- name: Copy Bind Exporter Binary
+  ansible.builtin.copy:
+    src: /usr/local/bin/bind_exporter-0.6.1.linux-amd64/bind_exporter
+    dest: /usr/local/bin/prometheus-bind-exporter
+    remote_src: yes
+    mode: 0755
+
+- name: Create bind exporter service
+  ansible.builtin.template:
+    src: prometheus-bind-exporter.service.j2
+    dest: /etc/systemd/system/prometheus-bind-exporter.service
+  notify:
+    - daemon reload
+    - restart bind exporter
+
+- name: Flush handlers 
+  meta: flush_handlers
+
+- name: Start Bind Exporter
+  ansible.builtin.service:
+    name: prometheus-bind-exporter
+    state: started
+    enabled: yes

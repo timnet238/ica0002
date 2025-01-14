@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -166,6 +166,67 @@
               {
                 "color": "green",
                 "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 15,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Time$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "time() - backup_last_success_time{user=\"timnet238\",service=\"influxdb\"}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "last influxdb backup created",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -177,7 +238,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 8,
         "x": 0,
         "y": 6
@@ -241,7 +302,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 7,
         "x": 8,
         "y": 6
@@ -301,10 +362,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 0,
-        "y": 11
+        "h": 6,
+        "w": 7,
+        "x": 15,
+        "y": 6
       },
       "id": 1,
       "options": {
@@ -335,67 +396,6 @@
         }
       ],
       "title": "last MySQL1 backup created",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 7,
-        "x": 8,
-        "y": 11
-      },
-      "id": 2,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^Time$/",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "editorMode": "code",
-          "expr": "time() - backup_last_success_time{user=\"timnet238\",service=\"influxdb\"}",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "last influxdb backup created",
       "type": "stat"
     }
   ],
