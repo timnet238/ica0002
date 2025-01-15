@@ -49,7 +49,7 @@
     zone: "{{ domain_name }}"
     record: "backup"
     type: "A"
-    value: "{{ backupserverip }}"
+    value: "{{ backup_server }}"
   no_log: true
   notify: restart bind9
   

@@ -12,52 +12,45 @@ scrape_configs:
   - job_name: linux
     static_configs:
       - targets:
-{% for vm in groups['all'] %}
-          - '{{ vm }}:9100'
-{% endfor %}
+          - 'www_1:9100'
+          - 'www_2:9100'
 
   - job_name: bind9
     static_configs:
       - targets:
-{% for vm in groups['dns_servers'] %}
-          - '{{ vm }}:{{ bind9_prom_port }}'
-{% endfor %}
-
+          - 'ns_1:{{ bind9_prom_port }}'
+          - 'ns_2:{{ bind9_prom_port }}'
+          - 'ns_3:{{ bind9_prom_port }}'
+          
   - job_name: mysql
     static_configs:
       - targets:
-{% for vm in groups['db_servers'] %}
-          - '{{ vm }}:{{ mysql_prom_port }}'
-{% endfor %}
+          - 'mysql_1:{{ mysql_prom_port }}'
+          - 'mysql_2:{{ mysql_prom_port }}'
 
   - job_name: nginx
     static_configs:
       - targets:
-{% for vm in groups['all'] %}
-          - '{{ vm }}:{{ nginx_prom_port }}'
-{% endfor %}
+          - 'www_1:{{ nginx_prom_port }}'
+          - 'www_2:{{ nginx_prom_port }}'
 
   - job_name: influxdb
     static_configs:
       - targets:
-{% for vm in groups['influxdb'] %}
-          - '{{ vm }}:9424'
-{% endfor %}
+          - 'influxdb:{{ ifluxdb_prom_port }}'
 
   - job_name: backup
     static_configs:
       - targets: ['backup.clickit.io:9111']
-      
+
   - job_name: haproxy
     static_configs:
       - targets:
-         {% for vm in groups['docker'] %}
-         - {{ vm }}:{{ haproxy_prom_port }}
-         {% endfor %}
-         
+          - 'www_1:{{ haproxy_prom_port }}'
+          - 'www_2:{{ haproxy_prom_port }}'
+
   - job_name: keepalived
     static_configs:
       - targets:
-         {% for vm in groups['docker'] %}
-         - {{ vm }}:{{ keepalive_prom_port }}
-         {% endfor %}
+          - 'www_1:{{ keepalive_prom_port }}'
+          - 'www_2:{{ keepalive_prom_port }}'

@@ -10,6 +10,12 @@
   notify:
     - Restart rsyslog
 
+- name: Start rsyslog
+  ansible.builtin.service:
+    name: rsyslog
+    state: started
+    enabled: yes
+
 - name: Install prometheus node exporters
   ansible.builtin.apt:
     name: prometheus-node-exporter

@@ -6,7 +6,6 @@ mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first |
 influxdb_host: timnet238-3
 startup_name: clickit.io
 backup_server: 192.168.42.132
-backupserverip: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90
 
 mysql_database: agama
@@ -107,11 +106,12 @@ grafana_port: 3000
 agama_port: 8001
 haproxy_prom_port: 9101
 keepalive_prom_port: 9165
+ifluxdb_prom_port: 9424
 
 haproxy_port: 88
 haproxy_stats_port: 9188
 
-nginx_containers_per_vm: 3
+nginx_containers_per_vm: 4
 
 cname_records:
     grafana: "{{ groups['grafana'][0] }}"
@@ -122,6 +122,7 @@ cname_records:
     mysql_2: "{{ groups['db_servers'][1] }}"
     ns_1: "{{ groups['dns_servers'][0] }}"
     ns_2: "{{ groups['dns_servers'][1] }}"
+    ns_3: "{{ groups['dns_primary'][0] }}"
     prometheus: "{{ groups['prometheus'][0] }}"
     www_1: "{{ groups['docker'][0] }}"
     www_2: "{{ groups['docker'][1] }}"
