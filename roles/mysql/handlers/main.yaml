@@ -18,7 +18,7 @@
     - stopreplica
     - resetprimary
   when: inventory_hostname == mysql_host
-#  no_log: yes
+  no_log: yes
   
 - name: reset mysql replica
   community.mysql.mysql_replication:
@@ -33,7 +33,7 @@
     - resetreplica
     - startreplica
   when: inventory_hostname != mysql_host
-#  no_log: yes
+  no_log: yes
 
 - name: Restart mysql exporter
   ansible.builtin.service:
