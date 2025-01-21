@@ -99,7 +99,7 @@
   template:
     dest: /var/lib/prometheus/.my.cnf
     src: my.cnf.ex.j2
-    mode: '0600'
+    mode: '0644'
   notify: Restart mysql exporter
   no_log: true
   
