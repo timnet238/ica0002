@@ -19,7 +19,7 @@ server {{ hostvars[vm]['ansible_default_ipv4']['address'] }} {
 {% endif %}
 
 zone "168.192.in-addr.arpa" {
-    file "db.clickit.io.reversed";
+    file "db.{{ domain_name }}.reversed";
 {% if inventory_hostname in groups ['dns_primary'] %}
     type master;
     allow-update { key nsupdate.key; };

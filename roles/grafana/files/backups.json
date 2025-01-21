@@ -190,7 +190,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^Time$/",
+          "fields": "/^\\{instance=\"backup\\.clickit\\.io:9111\", job=\"backup\", service=\"influxdb\", user=\"timnet238\"\\}$/",
           "values": false
         },
         "showPercentChange": false,
@@ -378,7 +378,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^Time$/",
+          "fields": "",
           "values": false
         },
         "showPercentChange": false,

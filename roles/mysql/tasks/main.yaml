@@ -36,7 +36,7 @@
     name: "{{ mysql_user }}"
     password: "{{ mysql_password }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    host: "{{ localhost_address }}"
+    host: "%"
     priv: "{{ mysql_database }}.*:ALL"
     
 - name: Create /home/backup/mysql directory
@@ -50,7 +50,6 @@
   community.mysql.mysql_user:
     name: backup
     password: "{{ mysql_backup_password }}"
-    host: "{{ localhost_address }}"
     priv: "{{ mysql_database }}.*:SELECT,LOCK TABLES"
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
@@ -74,7 +73,7 @@
   community.mysql.mysql_user:
     name: "{{ mysql_replication_user }}"
     password: "{{ mysql_replication_password }}"
-    host: "{{ localhost_address }}"
+    host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock
     priv: "*.*:REPLICATION SLAVE"
   no_log: yes
@@ -98,6 +97,7 @@
   template:
     dest: /var/lib/prometheus/.my.cnf
     src: my.cnf.ex.j2
+    mode: '0644'
   notify: Restart mysql exporter
   no_log: true
   
@@ -117,3 +117,9 @@
     src: prometheus-mysqld-exporter.j2
     dest: /etc/default/prometheus-mysqld-exporter
   notify: Restart mysql exporter
+  
+- name: Start and enable mysql exporter service
+  ansible.builtin.service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: yes

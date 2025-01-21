@@ -389,12 +389,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "red",
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "green",
+                "value": 1
               }
             ]
           }
@@ -1090,7 +1090,11 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
               }
             ]
           }
@@ -1295,7 +1299,7 @@
             "type": "influxdb",
             "uid": "P3DB4AB89FEDD369B"
           },
-          "query": "SELECT last(\"items\") AS \"current_items\"\nFROM \"agama-stats\"\nWHERE time > now() - 60m\n  AND (\"name\" = 'timnet238-1.clickit.io.')\nGROUP BY \"name\"",
+          "query": "SELECT last(\"items\") AS \"current_items\"\nFROM \"agama-stats\"\nWHERE (\"name\" = 'timnet238-1.clickit.io.')\nGROUP BY \"name\"",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"
@@ -1337,8 +1341,12 @@
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
               }
             ]
           }
@@ -1404,6 +1412,6 @@
   "timezone": "",
   "title": "Main",
   "uid": "ae3nne7k9q41sf",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

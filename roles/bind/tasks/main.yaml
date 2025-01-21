@@ -23,7 +23,7 @@
 - name: Copy the zone config
   template:
     src: ../templates/zone.j2
-    dest: /var/cache/bind/db.clickit.io
+    dest: /var/cache/bind/db.{{ domain_name }}
     force: no
   notify: restart rndc
   when: inventory_hostname in groups['dns_primary']
@@ -32,8 +32,8 @@
   when: inventory_hostname in groups['dns_primary']
   template:
     src: zone.reversed.j2
-    dest: /var/cache/bind/db.clickit.io.reversed
-  no_log: yes
+    dest: /var/cache/bind/db.{{ domain_name }}.reversed
+    force: no
   notify: restart rndc
   
 - name: Execute handlers

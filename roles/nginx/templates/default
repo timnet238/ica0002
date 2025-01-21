@@ -12,17 +12,17 @@ server {
 	}
 	
 	location /nginx-metrics {
-	    proxy_pass http://localhost:9113/metrics;
+	    proxy_pass http://localhost:{{ nginx_prom_port }}/metrics;
 	}
 	
 	location /grafana {
 	    proxy_set_header Host $http_host;
-	    proxy_pass http://localhost:{{ grafana_port }};
+	    proxy_pass http://localhost:3000;
 
 	}
 	
 	location /influxdb-metrics {
-	    proxy_pass http://localhost:9424/metrics;
+	    proxy_pass http://localhost:{{ ifluxdb_prom_port }}/metrics;
 	}
 }
 

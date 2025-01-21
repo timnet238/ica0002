@@ -43,7 +43,7 @@
   get_url:
     url: http://backup/keepalived-exporter_1.4.0_linux_amd64.deb
     dest: /opt/keepalived-exporter_1.4.0_linux_amd64.deb
-  #when: not keepalived_file.stat.exists
+
 
 - name: Install Keepalived Exporter
   apt:
