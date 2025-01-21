@@ -38,6 +38,7 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
     host: "%"
     priv: "{{ mysql_database }}.*:ALL"
+  no_log: true
     
 - name: Create /home/backup/mysql directory
   ansible.builtin.file:
@@ -52,7 +53,7 @@
     password: "{{ mysql_backup_password }}"
     priv: "{{ mysql_database }}.*:SELECT,LOCK TABLES"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-
+  no_log: true
 
 - name: Create configuration file
   ansible.builtin.template:
@@ -76,7 +77,7 @@
     host: "%"
     login_unix_socket: /var/run/mysqld/mysqld.sock
     priv: "*.*:REPLICATION SLAVE"
-  no_log: yes
+  no_log: true
   
 - name: Enable read-only mode on a replica
   community.mysql.mysql_variables:
